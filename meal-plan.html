@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7-Day Low Carb Grab & Go Meal Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brown: #3D2B1F;
+    --green: #4A6741;
+    --sage: #7A9E73;
+    --gold: #C9A87A;
+    --cream: #FAF7F2;
+    --amber: #C0761A;
+    --amber-light: #F5E6CC;
+    --green-light: #E8F0E6;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--brown);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .app-header {
+    background: var(--brown);
+    color: var(--cream);
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+  }
+  .app-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+  }
+  .app-header .subtitle {
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  /* Sticky info banner */
+  .info-banner {
+    background: var(--white);
+    border-bottom: 1px solid var(--gold);
+    padding: 0.65rem 1rem;
+    font-size: 0.82rem;
+    color: var(--brown);
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .info-banner span { margin: 0 0.75rem; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    background: var(--brown);
+    padding: 0 1rem 0;
+  }
+  .tab-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 0.65rem 1.5rem;
+    border: none;
+    background: transparent;
+    color: rgba(250,247,242,0.55);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--cream); }
+  .tab-btn.active {
+    color: var(--cream);
+    border-bottom-color: var(--gold);
+  }
+
+  /* Tab content */
+  .tab-content { display: none; padding: 1.25rem 1rem 3rem; max-width: 720px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 4px;
+  }
+  .legend-dot.green { background: var(--green); }
+  .legend-dot.amber { background: var(--amber); }
+
+  /* Day cards */
+  .day-card {
+    background: var(--white);
+    border-radius: 12px;
+    margin-bottom: 0.85rem;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.9rem 1.1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .day-header:hover { filter: brightness(0.97); }
+
+  .day-header.low-carb {
+    background: var(--green-light);
+    border-left: 5px solid var(--green);
+  }
+  .day-header.pbj {
+    background: var(--amber-light);
+    border-left: 5px solid var(--amber);
+  }
+
+  .day-header-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.1rem;
+  }
+  .day-header.low-carb h2 { color: var(--green); }
+  .day-header.pbj h2 { color: var(--amber); }
+
+  .day-meta {
+    font-size: 0.8rem;
+    color: #6B5E52;
+  }
+  .day-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .day-header.low-carb .day-badge {
+    background: var(--green);
+    color: var(--white);
+  }
+  .day-header.pbj .day-badge {
+    background: var(--amber);
+    color: var(--white);
+  }
+
+  .day-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .day-progress {
+    font-size: 0.72rem;
+    color: #8C7E72;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .chevron {
+    font-size: 1.1rem;
+    transition: transform 0.25s;
+    margin-left: 0.25rem;
+    color: #6B5E52;
+  }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  .day-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .day-card.open .day-body {
+    max-height: 1200px;
+  }
+  .day-body-inner {
+    padding: 0.5rem 1.1rem 1.1rem;
+  }
+
+  /* Meal row */
+  .meal {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .meal:last-child { border-bottom: none; }
+  .meal-label {
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.35rem;
+  }
+  .day-header.low-carb ~ .day-body .meal-label { color: var(--green); }
+  .day-card.pbj-card .meal-label { color: var(--amber); }
+  .meal-cal {
+    font-size: 0.78rem;
+    color: #8C7E72;
+    font-weight: 400;
+  }
+
+  /* Checkbox items */
+  .food-item {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.25rem 0;
+    cursor: pointer;
+  }
+  .food-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gold);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s;
+    background: var(--white);
+  }
+  .food-item input[type="checkbox"]:checked {
+    background: var(--sage);
+    border-color: var(--sage);
+  }
+  .food-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .food-item label {
+    font-size: 0.92rem;
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.4;
+  }
+  .food-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: #A89E94;
+  }
+
+  /* Reset button */
+  .reset-bar {
+    text-align: center;
+    margin-top: 1.25rem;
+  }
+  .reset-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--brown);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .reset-btn:hover {
+    background: var(--gold);
+    color: var(--white);
+  }
+
+  /* Grocery grid */
+  .grocery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+  .grocery-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+  .grocery-emoji {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 0.1rem;
+  }
+  .grocery-info { flex: 1; }
+  .grocery-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
+  }
+  .grocery-qty {
+    font-size: 0.82rem;
+    color: #8C7E72;
+  }
+
+  /* Tips grid */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.85rem;
+  }
+  .tip-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+    border-top: 3px solid var(--sage);
+  }
+  .tip-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--green);
+    margin-bottom: 0.35rem;
+  }
+  .tip-body {
+    font-size: 0.9rem;
+    color: #5A4E44;
+    line-height: 1.55;
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .app-header h1 { font-size: 1.4rem; }
+    .tab-btn { padding: 0.6rem 1rem; font-size: 0.85rem; }
+    .grocery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .tips-grid { grid-template-columns: 1fr; }
+    .legend { gap: 1rem; }
+    .day-header-left h2 { font-size: 1.05rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>7-Day Low Carb Grab & Go</h1>
+  <div class="subtitle">~1,500 cal/day &middot; No cooking &middot; Minimal fridge</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="mealplan">Meal Plan</button>
+  <button class="tab-btn" data-tab="grocery">Grocery List</button>
+  <button class="tab-btn" data-tab="tips">Tips</button>
+</nav>
+
+<div class="info-banner">
+  <span>🥜 PB&J days run higher carbs (~57g); other days ~17–19g</span>
+  <span>❄️ = grab from fridge each morning (safe at room temp 2–3 hrs)</span>
+</div>
+
+<!-- MEAL PLAN TAB -->
+<div class="tab-content active" id="tab-mealplan">
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot green"></div> Low Carb Day</div>
+    <div class="legend-item"><div class="legend-dot amber"></div> PB&J Day</div>
+  </div>
+
+  <!-- Monday -->
+  <div class="day-card pbj-card" id="day-mon">
+    <div class="day-header pbj" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Monday 🥜</h2>
+        <div class="day-meta">~1,460 cal &middot; ~57g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">PB&J Day</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(316 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="mon-b1"><label for="mon-b1">Premier Protein shake</label></div>
+          <div class="food-item"><input type="checkbox" id="mon-b2"><label for="mon-b2">2 hard-boiled eggs ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(480 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="mon-l1"><label for="mon-l1">PB&J sandwich</label></div>
+          <div class="food-item"><input type="checkbox" id="mon-l2"><label for="mon-l2">1 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(254 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="mon-s1"><label for="mon-s1">1 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="mon-s2"><label for="mon-s2">1 oz beef jerky</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(410 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="mon-d1"><label for="mon-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="mon-d2"><label for="mon-d2">1 oz pepperoni slices</label></div>
+          <div class="food-item"><input type="checkbox" id="mon-d3"><label for="mon-d3">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tuesday -->
+  <div class="day-card" id="day-tue">
+    <div class="day-header low-carb" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Tuesday</h2>
+        <div class="day-meta">~1,450 cal &middot; ~19g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">Low Carb</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(346 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="tue-b1"><label for="tue-b1">Quest protein bar</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-b2"><label for="tue-b2">2 hard-boiled eggs ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(384 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="tue-l1"><label for="tue-l1">Tuna pouch + mayo packet</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-l2"><label for="tue-l2">1 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-l3"><label for="tue-l3">1 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(230 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="tue-s1"><label for="tue-s1">Premier Protein shake</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-s2"><label for="tue-s2">Single-serve cottage cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(490 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="tue-d1"><label for="tue-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-d2"><label for="tue-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-d3"><label for="tue-d3">1 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="tue-d4"><label for="tue-d4">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wednesday -->
+  <div class="day-card pbj-card" id="day-wed">
+    <div class="day-header pbj" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Wednesday 🥜</h2>
+        <div class="day-meta">~1,460 cal &middot; ~58g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">PB&J Day</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(236 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="wed-b1"><label for="wed-b1">2 hard-boiled eggs ❄️</label></div>
+          <div class="food-item"><input type="checkbox" id="wed-b2"><label for="wed-b2">1 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(564 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="wed-l1"><label for="wed-l1">PB&J sandwich</label></div>
+          <div class="food-item"><input type="checkbox" id="wed-l2"><label for="wed-l2">1 oz almonds</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(160 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="wed-s1"><label for="wed-s1">Premier Protein shake</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(500 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="wed-d1"><label for="wed-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="wed-d2"><label for="wed-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="wed-d3"><label for="wed-d3">1 oz beef jerky</label></div>
+          <div class="food-item"><input type="checkbox" id="wed-d4"><label for="wed-d4">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Thursday -->
+  <div class="day-card" id="day-thu">
+    <div class="day-header low-carb" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Thursday</h2>
+        <div class="day-meta">~1,450 cal &middot; ~18g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">Low Carb</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(350 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="thu-b1"><label for="thu-b1">Quest protein bar</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-b2"><label for="thu-b2">Premier Protein shake</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(466 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="thu-l1"><label for="thu-l1">Tuna pouch + mayo packet</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-l2"><label for="thu-l2">1.5 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-l3"><label for="thu-l3">1 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(226 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="thu-s1"><label for="thu-s1">2 hard-boiled eggs ❄️</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-s2"><label for="thu-s2">Single-serve cottage cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(410 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="thu-d1"><label for="thu-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-d2"><label for="thu-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="thu-d3"><label for="thu-d3">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Friday -->
+  <div class="day-card pbj-card" id="day-fri">
+    <div class="day-header pbj" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Friday 🥜</h2>
+        <div class="day-meta">~1,480 cal &middot; ~57g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">PB&J Day</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(346 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="fri-b1"><label for="fri-b1">2 hard-boiled eggs ❄️</label></div>
+          <div class="food-item"><input type="checkbox" id="fri-b2"><label for="fri-b2">Quest protein bar</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(400 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="fri-l1"><label for="fri-l1">PB&J sandwich</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(324 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="fri-s1"><label for="fri-s1">Premier Protein shake</label></div>
+          <div class="food-item"><input type="checkbox" id="fri-s2"><label for="fri-s2">1 oz almonds</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(410 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="fri-d1"><label for="fri-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="fri-d2"><label for="fri-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="fri-d3"><label for="fri-d3">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Saturday -->
+  <div class="day-card" id="day-sat">
+    <div class="day-header low-carb" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Saturday</h2>
+        <div class="day-meta">~1,470 cal &middot; ~18g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">Low Carb</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(396 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sat-b1"><label for="sat-b1">2 hard-boiled eggs ❄️</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-b2"><label for="sat-b2">1 string cheese ❄️</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-b3"><label for="sat-b3">Premier Protein shake</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(384 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sat-l1"><label for="sat-l1">Tuna pouch + mayo packet</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-l2"><label for="sat-l2">1 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-l3"><label for="sat-l3">1 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(190 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sat-s1"><label for="sat-s1">Quest protein bar</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(500 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sat-d1"><label for="sat-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-d2"><label for="sat-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-d3"><label for="sat-d3">1 oz beef jerky</label></div>
+          <div class="food-item"><input type="checkbox" id="sat-d4"><label for="sat-d4">1 string cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sunday -->
+  <div class="day-card" id="day-sun">
+    <div class="day-header low-carb" onclick="toggleDay(this)">
+      <div class="day-header-left">
+        <h2>Sunday</h2>
+        <div class="day-meta">~1,400 cal &middot; ~17g net carbs</div>
+      </div>
+      <div class="day-header-right">
+        <span class="day-progress"></span>
+        <span class="day-badge">Low Carb</span>
+        <span class="chevron">&#9662;</span>
+      </div>
+    </div>
+    <div class="day-body">
+      <div class="day-body-inner">
+        <div class="meal">
+          <div class="meal-label">Breakfast <span class="meal-cal">(346 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sun-b1"><label for="sun-b1">Quest protein bar</label></div>
+          <div class="food-item"><input type="checkbox" id="sun-b2"><label for="sun-b2">2 hard-boiled eggs ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Lunch <span class="meal-cal">(496 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sun-l1"><label for="sun-l1">1 oz beef jerky</label></div>
+          <div class="food-item"><input type="checkbox" id="sun-l2"><label for="sun-l2">1.5 oz almonds</label></div>
+          <div class="food-item"><input type="checkbox" id="sun-l3"><label for="sun-l3">2 string cheese ❄️</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Snack <span class="meal-cal">(160 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sun-s1"><label for="sun-s1">Premier Protein shake</label></div>
+        </div>
+        <div class="meal">
+          <div class="meal-label">Dinner <span class="meal-cal">(400 cal)</span></div>
+          <div class="food-item"><input type="checkbox" id="sun-d1"><label for="sun-d1">2 Chomps meat sticks</label></div>
+          <div class="food-item"><input type="checkbox" id="sun-d2"><label for="sun-d2">1 oz pepperoni</label></div>
+          <div class="food-item"><input type="checkbox" id="sun-d3"><label for="sun-d3">Single-serve cottage cheese ❄️</label></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" onclick="resetAll()">Reset All Checkboxes</button>
+  </div>
+</div>
+
+<!-- GROCERY LIST TAB -->
+<div class="tab-content" id="tab-grocery">
+  <div class="grocery-grid">
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥚</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Pre-packaged Hard Boiled Eggs</div>
+        <div class="grocery-qty">14 eggs ❄️</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🧀</div>
+      <div class="grocery-info">
+        <div class="grocery-name">String Cheese</div>
+        <div class="grocery-qty">18–20 sticks ❄️</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥛</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Single-Serve Cottage Cheese</div>
+        <div class="grocery-qty">3 cups ❄️ (Good Culture)</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🫘</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Almonds (raw or roasted)</div>
+        <div class="grocery-qty">~14 oz bag</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🍫</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Quest Protein Bars</div>
+        <div class="grocery-qty">5 bars</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">💪</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Premier Protein Shakes</div>
+        <div class="grocery-qty">7 shakes</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🐟</div>
+      <div class="grocery-info">
+        <div class="grocery-name">StarKist Tuna Pouches</div>
+        <div class="grocery-qty">4 pouches (2.6 oz)</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥄</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Hellmann's Mayo Packets</div>
+        <div class="grocery-qty">4–6 packets (Amazon bulk)</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥩</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Chomps Meat Sticks</div>
+        <div class="grocery-qty">14 sticks</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥓</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Beef Jerky</div>
+        <div class="grocery-qty">~5 oz total</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🍕</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Pepperoni Slices (snack pack)</div>
+        <div class="grocery-qty">~5 oz total</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥜</div>
+      <div class="grocery-info">
+        <div class="grocery-name">PB&J Ingredients</div>
+        <div class="grocery-qty">Bread, peanut butter, jelly</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">☕</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Half & Half Creamer Cups</div>
+        <div class="grocery-qty">1 box (shelf-stable)</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🍴</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Plastic Forks</div>
+        <div class="grocery-qty">1 pack</div>
+      </div>
+    </div>
+    <div class="grocery-card">
+      <div class="grocery-emoji">🥄</div>
+      <div class="grocery-info">
+        <div class="grocery-name">Plastic Spoons</div>
+        <div class="grocery-qty">1 pack</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIPS TAB -->
+<div class="tab-content" id="tab-tips">
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-title">Coffee sorted</div>
+      <div class="tip-body">Individual half & half creamer cups are fully shelf-stable. Grab a box at Costco or Amazon — ~1g carb per cup.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Tuna = instant lunch</div>
+      <div class="tip-body">Tear open the tuna pouch, squeeze in the mayo packet, eat with a fork. StarKist flavored pouches (lemon pepper, ranch) are surprisingly good.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">PB&J smart swap</div>
+      <div class="tip-body">Use natural peanut butter (just peanuts + salt) and a low-sugar jelly to keep PB&J day carbs on the lower end.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Mayo packets</div>
+      <div class="tip-body">Hellmann's single-serve packets are on Amazon in bulk. Toss a few in your bag Sunday night and forget about it.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Pre-portion almonds</div>
+      <div class="tip-body">Weigh out 1 oz servings (~23 nuts) into small zip bags on Sunday. Saves you from snack math all week.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Premier vs. Fairlife</div>
+      <div class="tip-body">Both work great. Premier Protein is cheaper; Fairlife Core Power has 42g protein. Both are ~3g net carbs.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Hydration</div>
+      <div class="tip-body">Low carb flushes electrolytes. Add a pinch of salt to water, or try LMNT / Liquid IV zero sugar packets if you feel sluggish.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-title">Morning fridge routine</div>
+      <div class="tip-body">Each morning, drop eggs + string cheese + cottage cheese (if that day) into a bag. 10-second habit that saves the whole day.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Day card toggle
+  function toggleDay(header) {
+    const card = header.parentElement;
+    card.classList.toggle('open');
+  }
+
+  // Update progress counter on each day header
+  function updateProgress(card) {
+    const total = card.querySelectorAll('.food-item input[type="checkbox"]').length;
+    const checked = card.querySelectorAll('.food-item input[type="checkbox"]:checked').length;
+    const progressEl = card.querySelector('.day-progress');
+    if (checked === 0) {
+      progressEl.textContent = '';
+    } else if (checked === total) {
+      progressEl.textContent = 'All done!';
+      progressEl.style.color = '#4A6741';
+    } else {
+      progressEl.textContent = checked + '/' + total;
+      progressEl.style.color = '#8C7E72';
+    }
+  }
+
+  // Listen for checkbox changes
+  document.querySelectorAll('.food-item input[type="checkbox"]').forEach(cb => {
+    cb.addEventListener('change', () => {
+      const card = cb.closest('.day-card');
+      updateProgress(card);
+      saveState();
+    });
+  });
+
+  // Save checkbox state to memory (survives within session)
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('.food-item input[type="checkbox"]').forEach(cb => {
+      state[cb.id] = cb.checked;
+    });
+    try { sessionStorage.setItem('mealplan-checks', JSON.stringify(state)); } catch(e) {}
+  }
+
+  // Restore state on load
+  function loadState() {
+    try {
+      const raw = sessionStorage.getItem('mealplan-checks');
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      Object.keys(state).forEach(id => {
+        const cb = document.getElementById(id);
+        if (cb) cb.checked = state[id];
+      });
+      document.querySelectorAll('.day-card').forEach(updateProgress);
+    } catch(e) {}
+  }
+
+  // Reset all
+  function resetAll() {
+    if (!confirm('Uncheck everything and start fresh?')) return;
+    document.querySelectorAll('.food-item input[type="checkbox"]').forEach(cb => {
+      cb.checked = false;
+    });
+    document.querySelectorAll('.day-card').forEach(updateProgress);
+    saveState();
+  }
+
+  // Init
+  loadState();
+</script>
+
+</body>
+</html>
